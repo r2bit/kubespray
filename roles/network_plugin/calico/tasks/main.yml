@@ -109,7 +109,7 @@
     echo '{
     "kind": "ipPool",
     "spec": {"disabled": false, "ipip": {"enabled": {{ ipip }}, "mode": "{{ ipip_mode }}"},
-             "nat-outgoing": {{ nat_outgoing|default(false) and not peer_with_router|default(false) }}},
+             "nat-outgoing": {{ nat_outgoing|default(false) }}},
     "apiVersion": "v1",
     "metadata": {"cidr": "{{ kube_pods_subnet }}"}
     }'
