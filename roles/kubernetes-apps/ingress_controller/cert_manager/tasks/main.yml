@@ -1,33 +1,5 @@
 ---
 
-- name: Cert Manager | Remove legacy addon dir and manifests
-  file:
-    path: "{{ kube_config_dir }}/addons/cert_manager"
-    state: absent
-  when:
-    - inventory_hostname == groups['kube-master'][0]
-  tags:
-    - upgrade
-
-- name: Cert Manager | Remove legacy namespace
-  shell: |
-    {{ bin_dir }}/kubectl delete namespace {{ cert_manager_namespace }}
-  ignore_errors: yes
-  when:
-    - inventory_hostname == groups['kube-master'][0]
-  tags:
-    - upgrade
-
-- name: Cert Manager | Create addon dir
-  file:
-    path: "{{ kube_config_dir }}/addons/cert_manager"
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-  when:
-    - inventory_hostname == groups['kube-master'][0]
-
 - name: Cert Manager | Create manifests
   template:
     src: "{{ item.file }}.j2"
